@@ -13,8 +13,12 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
+    implementation("org.mongodb:mongo-java-driver:3.12.11")
+    implementation("org.litote.kmongo:kmongo:4.6.1")
+
     testImplementation(kotlin("test"))
+
+    compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
 }
 
 tasks.test {
