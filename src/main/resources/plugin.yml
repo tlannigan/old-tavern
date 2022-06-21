@@ -1,0 +1,5 @@
+name: Tavern # the plugins name as it should appear in the plugin list /pl
+version: 0.1 # the plugin's version
+author: Tirsty
+main: com.tlannigan.tavern.Tavern
+api-version: 1.19 # the version of the API you want to use, required starting with 1.13
