@@ -13,6 +13,8 @@ data class TCampaign(
     @SerialName("_id")
     val id: Id<TCampaign> = newId(),
 
+    val gameMaster: TCharacter,
+
     val name: String,
 
     val isPublic: Boolean = false,
@@ -23,18 +25,7 @@ data class TCampaign(
 
     val playerLimit: Int = 8,
 
-    val players: Set<TCampaignCharacter> = emptySet()
-
-)
-
-@Serializable
-data class TCampaignCharacter(
-
-    var character: TCharacter,
-
-    var state: PlayerState,
-
-    var isGameMaster: Boolean
+    val players: MutableList<TCharacter> = mutableListOf()
 
 )
 

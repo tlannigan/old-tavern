@@ -10,11 +10,14 @@ import java.util.*
 @Serializable
 data class TCharacter(
 
+    @Contextual
     @SerialName("_id")
     val id: Id<TCharacter> = newId(),
 
     val uuid: @Contextual UUID,
 
-    var name: String
+    var name: String,
+
+    val state: PlayerState
 
 )

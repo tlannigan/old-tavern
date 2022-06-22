@@ -20,9 +20,9 @@ data class TPlayer(
 
     val activeCampaign: Id<TCampaign>? = null,
 
-    val campaigns: Set<TCampaign>? = emptySet(),
+    val campaigns: MutableList<TCampaign> = mutableListOf(),
 
-    val characters: Set<TCharacter>? = emptySet()
+    val characters: MutableList<TCharacter> = mutableListOf()
 
 )
 
