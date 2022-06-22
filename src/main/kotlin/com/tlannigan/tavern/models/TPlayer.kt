@@ -1,33 +1,78 @@
 package com.tlannigan.tavern.models
 
-import org.bson.codecs.pojo.annotations.BsonId
+import com.google.gson.JsonObject
+import com.google.gson.JsonPrimitive
+import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.CompositeDecoder
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import org.bukkit.Bukkit.getWorld
+import org.bukkit.Location
 import org.bukkit.inventory.Inventory
-import org.litote.kmongo.Id
-import org.litote.kmongo.newId
+import java.util.UUID
+import kotlin.reflect.full.starProjectedType
 
+@Serializable
 data class TPlayer(
 
-    @BsonId
-    val id: Id<TPlayer> = newId(),
+    @SerialName("_id")
+    @Contextual
+    val id: UUID,
 
     val state: PlayerState,
 
-    val activeCampaign: Id<TCampaign>,
-
-    val campaigns: Set<TCampaign>,
-
-    val characters: Set<TCharacter>
+//    val activeCampaign: Id<TCampaign>? = null,
+//
+//    val campaigns: Set<TCampaign>? = emptySet(),
+//
+//    val characters: Set<TCharacter>? = emptySet()
 
 )
 
+@Serializable
 data class PlayerState(
 
     val health: Double,
 
     val mana: Int,
 
-    val location: Map<String, Any>,
+    val location: TLocation,
 
     val inventory: Inventory? = null
 
 )
+
+@Serializable
+data class TLocation(
+
+    val world: String,
+
+    val x: Double,
+
+    val y: Double,
+
+    val z: Double,
+
+    val pitch: Float,
+
+    val yaw: Float
+
+) {
+
+    /**
+     * Converts serialized location into Bukkit Location
+     */
+    fun toLocation(): Location {
+        return Location(
+            getWorld(world),
+            this.x,
+            this.y,
+            this.z,
+            this.pitch,
+            this.yaw
+        )
+    }
+}
