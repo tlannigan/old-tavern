@@ -1,34 +1,28 @@
 package com.tlannigan.tavern.models
 
-import com.google.gson.JsonObject
-import com.google.gson.JsonPrimitive
-import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.CompositeDecoder
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import org.bukkit.Bukkit.getWorld
 import org.bukkit.Location
 import org.bukkit.inventory.Inventory
-import java.util.UUID
-import kotlin.reflect.full.starProjectedType
+import org.litote.kmongo.Id
+import java.util.*
 
 @Serializable
 data class TPlayer(
 
-    @SerialName("_id")
     @Contextual
+    @SerialName("_id")
     val id: UUID,
 
     val state: PlayerState,
 
-//    val activeCampaign: Id<TCampaign>? = null,
-//
-//    val campaigns: Set<TCampaign>? = emptySet(),
-//
-//    val characters: Set<TCharacter>? = emptySet()
+    val activeCampaign: Id<TCampaign>? = null,
+
+    val campaigns: Set<TCampaign>? = emptySet(),
+
+    val characters: Set<TCharacter>? = emptySet()
 
 )
 

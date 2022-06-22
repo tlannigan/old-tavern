@@ -1,16 +1,19 @@
 package com.tlannigan.tavern.models
 
-import org.bson.codecs.pojo.annotations.BsonId
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import org.litote.kmongo.Id
 import org.litote.kmongo.newId
 import java.util.*
 
+@Serializable
 data class TCharacter(
 
-    @BsonId
+    @SerialName("_id")
     val id: Id<TCharacter> = newId(),
 
-    val uuid: UUID,
+    val uuid: @Contextual UUID,
 
     var name: String
 

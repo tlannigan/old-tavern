@@ -1,12 +1,14 @@
 package com.tlannigan.tavern.models
 
-import org.bson.codecs.pojo.annotations.BsonId
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import org.litote.kmongo.Id
 import org.litote.kmongo.newId
 
+@Serializable
 data class TCampaign(
 
-    @BsonId
+    @SerialName("_id")
     val id: Id<TCampaign> = newId(),
 
     val name: String,
@@ -23,6 +25,7 @@ data class TCampaign(
 
 )
 
+@Serializable
 data class TCampaignCharacter(
 
     var character: TCharacter,
