@@ -1,5 +1,6 @@
 package com.tlannigan.tavern.models
 
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.litote.kmongo.Id
@@ -8,6 +9,7 @@ import org.litote.kmongo.newId
 @Serializable
 data class TCampaign(
 
+    @Contextual
     @SerialName("_id")
     val id: Id<TCampaign> = newId(),
 
@@ -21,7 +23,7 @@ data class TCampaign(
 
     val playerLimit: Int = 8,
 
-    val players: Set<TCampaignCharacter>
+    val players: Set<TCampaignCharacter> = emptySet()
 
 )
 
