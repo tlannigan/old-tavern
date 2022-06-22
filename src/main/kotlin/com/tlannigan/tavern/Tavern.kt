@@ -1,5 +1,6 @@
 package com.tlannigan.tavern
 
+import com.tlannigan.tavern.commands.player.CampaignCommand
 import com.tlannigan.tavern.listeners.PlayerListener
 import com.tlannigan.tavern.utils.ConfigManager
 import com.tlannigan.tavern.utils.DatabaseManager
@@ -15,14 +16,19 @@ class Tavern : JavaPlugin() {
         db.initialize()
 
         registerEvents()
+        registerCommands()
     }
 
     override fun onDisable() {
-        DatabaseManager.mongoClient.close()
+        db.deinitialize()
     }
 
     private fun registerEvents() {
         server.pluginManager.registerEvents(PlayerListener(), this)
+    }
+
+    private fun registerCommands() {
+        getCommand("campaign")?.setExecutor(CampaignCommand())
     }
 
 }
