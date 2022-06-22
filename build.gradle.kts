@@ -1,7 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+val kotlinVersion = "1.7.0"
 
 plugins {
     kotlin("jvm") version "1.7.0"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "com.tlannigan"
@@ -13,8 +17,8 @@ repositories {
 }
 
 dependencies {
-    implementation("org.mongodb:mongo-java-driver:3.12.11")
-    implementation("org.litote.kmongo:kmongo:4.6.1")
+    implementation("org.litote.kmongo:kmongo-serialization:4.6.1")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     testImplementation(kotlin("test"))
 
@@ -26,9 +30,19 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "17"
+}
+
+tasks.withType<ShadowJar> {
+    archiveFileName.set("${project.name}-${project.version}.jar")
 }
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
