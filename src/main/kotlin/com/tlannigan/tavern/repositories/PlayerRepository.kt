@@ -4,13 +4,13 @@ import com.mongodb.client.MongoDatabase
 import com.mongodb.client.result.DeleteResult
 import com.mongodb.client.result.InsertOneResult
 import com.mongodb.client.result.UpdateResult
-import com.tlannigan.tavern.models.PlayerState
-import com.tlannigan.tavern.models.TLocation
 import com.tlannigan.tavern.models.TPlayer
 import com.tlannigan.tavern.utils.DatabaseManager
-import org.bukkit.Location
 import org.bukkit.entity.Player
-import org.litote.kmongo.*
+import org.litote.kmongo.eq
+import org.litote.kmongo.findOne
+import org.litote.kmongo.getCollection
+import org.litote.kmongo.updateOne
 
 class PlayerRepository(db: MongoDatabase = DatabaseManager.db) {
 
@@ -32,34 +32,4 @@ class PlayerRepository(db: MongoDatabase = DatabaseManager.db) {
         return players.deleteOne(TPlayer::id eq player.uniqueId)
     }
 
-}
-
-fun Player.toTPlayer(): TPlayer {
-    return TPlayer(
-        this.uniqueId,
-        this.getPlayerState()
-    )
-}
-
-fun Player.getPlayerState(): PlayerState {
-    return PlayerState(
-        this.health,
-        this.foodLevel,
-        this.location.toTLocation(),
-        null
-    )
-}
-
-/**
- * Converts Bukkit Location into serializable location
- */
-fun Location.toTLocation(): TLocation {
-    return TLocation(
-        this.world.name,
-        this.x,
-        this.y,
-        this.z,
-        this.pitch,
-        this.yaw
-    )
 }
