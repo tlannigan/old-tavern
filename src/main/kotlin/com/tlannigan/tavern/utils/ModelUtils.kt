@@ -3,8 +3,13 @@ package com.tlannigan.tavern.utils
 import com.tlannigan.tavern.models.PlayerState
 import com.tlannigan.tavern.models.TLocation
 import com.tlannigan.tavern.models.TPlayer
+import com.tlannigan.tavern.repositories.PlayerRepository
 import org.bukkit.Location
 import org.bukkit.entity.Player
+
+fun Player.getTPlayer(): TPlayer? {
+    return PlayerRepository().find(this)
+}
 
 fun Player.toTPlayer(): TPlayer {
     return TPlayer(
