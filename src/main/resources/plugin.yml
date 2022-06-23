@@ -9,3 +9,8 @@ commands:
     description: Campaign related commands
     usage: /campaign [create | list | leave]
     aliases: [c, camp]
+
+  gamemaster:
+    description: Game Master related commands
+    usage: /gamemaster [start | end | delete]
+    aliases: gm
