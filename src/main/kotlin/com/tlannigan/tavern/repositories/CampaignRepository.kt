@@ -6,6 +6,7 @@ import com.mongodb.client.result.InsertOneResult
 import com.mongodb.client.result.UpdateResult
 import com.tlannigan.tavern.models.TCampaign
 import com.tlannigan.tavern.utils.DatabaseManager
+import org.bson.conversions.Bson
 import org.litote.kmongo.*
 
 class CampaignRepository(db: MongoDatabase = DatabaseManager.db) {
@@ -20,12 +21,17 @@ class CampaignRepository(db: MongoDatabase = DatabaseManager.db) {
         return campaigns.findOne(TCampaign::id eq campaignId)
     }
 
-    fun findMany(): MutableList<TCampaign> {
-        return campaigns.find(TCampaign::playerLimit eq 8).toMutableList()
+    fun findMany(ids: MutableList<Id<TCampaign>>): MutableList<TCampaign> {
+        val filterList: MutableList<Bson> = mutableListOf()
+        for (id: Id<TCampaign> in ids) {
+            filterList.add(TCampaign::id eq id)
+        }
+
+        return campaigns.find(or(filterList)).toMutableList()
     }
 
     fun update(campaign: TCampaign): UpdateResult {
-        return campaigns.updateOne(TCampaign::id eq campaign.id)
+        return campaigns.updateOne(campaign)
     }
 
     fun delete(campaign: TCampaign): DeleteResult {
