@@ -10,7 +10,11 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
-        PlayerRepository().create(event.player.toTPlayer())
+        val playerRepo = PlayerRepository()
+        val playerExists = playerRepo.find(event.player.uniqueId)
+        if (playerExists == null) {
+            PlayerRepository().create(event.player.toTPlayer())
+        }
     }
 
 }
