@@ -13,19 +13,21 @@ data class TCampaign(
     @SerialName("_id")
     val id: Id<TCampaign> = newId(),
 
-    val gameMaster: TCharacter,
+    var gameMaster: TCharacter,
 
-    val name: String,
+    var spawn: TLocation,
 
-    val isPublic: Boolean = false,
+    var name: String,
 
-    val inSession: Boolean = false,
+    var isPublic: Boolean = false,
 
-    val sessionState: SessionState = SessionState.FREE,
+    var inSession: Boolean = false,
 
-    val playerLimit: Int = 8,
+    var sessionState: SessionState = SessionState.FREE,
 
-    val players: MutableList<TCharacter> = mutableListOf()
+    var playerLimit: Int = 8,
+
+    val characters: MutableList<TCharacter> = mutableListOf()
 
 )
 
