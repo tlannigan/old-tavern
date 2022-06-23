@@ -11,6 +11,7 @@ import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 import org.litote.kmongo.getCollection
 import org.litote.kmongo.updateOne
+import java.util.*
 
 class PlayerRepository(db: MongoDatabase = DatabaseManager.db) {
 
@@ -24,8 +25,12 @@ class PlayerRepository(db: MongoDatabase = DatabaseManager.db) {
         return players.findOne(TPlayer::id eq player.uniqueId)
     }
 
+    fun find(id: UUID): TPlayer? {
+        return players.findOne(TPlayer::id eq id)
+    }
+
     fun update(tPlayer: TPlayer): UpdateResult {
-        return players.updateOne(TPlayer::id eq tPlayer.id)
+        return players.updateOne(tPlayer)
     }
 
     fun delete(player: Player): DeleteResult {
