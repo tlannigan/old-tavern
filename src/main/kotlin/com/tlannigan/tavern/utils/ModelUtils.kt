@@ -8,7 +8,21 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 
 fun Player.getTPlayer(): TPlayer? {
-    return PlayerRepository().find(this)
+    // Try to find TPlayer in DB
+    val tPlayer = PlayerRepository().find(this)
+    if (tPlayer != null) {
+        return tPlayer
+    } else {
+        // Create a new TPlayer
+        val player = this.toTPlayer()
+        val savedPlayer = PlayerRepository().create(player)
+
+        return if (savedPlayer.insertedId != null) {
+            player
+        } else {
+            null
+        }
+    }
 }
 
 fun Player.toTPlayer(): TPlayer {
@@ -27,6 +41,13 @@ fun Player.getPlayerState(): PlayerState {
     )
 }
 
+fun Player.applyState(state: PlayerState) {
+    this.health = state.health
+    this.foodLevel = state.mana
+    this.teleport(state.location.toLocation())
+    // TODO("Apply inventory in PlayerState")
+}
+
 /**
  * Converts Bukkit Location into serializable location
  */
@@ -36,7 +57,7 @@ fun Location.toTLocation(): TLocation {
         this.x,
         this.y,
         this.z,
-        this.pitch,
-        this.yaw
+        this.yaw,
+        this.pitch
     )
 }
