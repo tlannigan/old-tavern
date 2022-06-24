@@ -5,9 +5,11 @@ import com.mongodb.client.result.DeleteResult
 import com.mongodb.client.result.InsertOneResult
 import com.mongodb.client.result.UpdateResult
 import com.tlannigan.tavern.models.TCampaign
+import com.tlannigan.tavern.models.TCharacter
 import com.tlannigan.tavern.utils.DatabaseManager
 import org.bson.conversions.Bson
 import org.litote.kmongo.*
+import java.util.*
 
 class CampaignRepository(db: MongoDatabase = DatabaseManager.db) {
 
@@ -28,6 +30,24 @@ class CampaignRepository(db: MongoDatabase = DatabaseManager.db) {
         }
 
         return campaigns.find(or(filterList)).toMutableList()
+    }
+
+    fun findManyInSession(ids: MutableList<Id<TCampaign>>): MutableList<TCampaign> {
+        val filterList: MutableList<Bson> = mutableListOf()
+        for (id: Id<TCampaign> in ids) {
+            filterList.add(TCampaign::id eq id)
+        }
+
+        return campaigns.find(or(filterList), TCampaign::inSession eq true).toMutableList()
+    }
+
+    fun findManyWhereGameMaster(ids: MutableList<Id<TCampaign>>, uuid: UUID): MutableList<TCampaign> {
+        val filterList: MutableList<Bson> = mutableListOf()
+        for (id: Id<TCampaign> in ids) {
+            filterList.add(TCampaign::id eq id)
+        }
+
+        return campaigns.find(or(filterList), TCampaign::gameMaster / TCharacter::uuid eq uuid).toMutableList()
     }
 
     fun update(campaign: TCampaign): UpdateResult {
