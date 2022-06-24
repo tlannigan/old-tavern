@@ -1,6 +1,6 @@
 package com.tlannigan.tavern
 
-import com.tlannigan.tavern.commands.GameMasterCommand
+import com.tlannigan.tavern.commands.gamemaster.GameMasterCommand
 import com.tlannigan.tavern.commands.player.CampaignCommand
 import com.tlannigan.tavern.listeners.PlayerListener
 import com.tlannigan.tavern.utils.ConfigManager
