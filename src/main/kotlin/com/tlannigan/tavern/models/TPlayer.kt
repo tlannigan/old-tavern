@@ -2,6 +2,7 @@ package com.tlannigan.tavern.models
 
 import com.tlannigan.tavern.repositories.CampaignRepository
 import com.tlannigan.tavern.repositories.PlayerRepository
+import com.tlannigan.tavern.utils.ChatComponents.Companion.inviteCampaign
 import com.tlannigan.tavern.utils.applyState
 import com.tlannigan.tavern.utils.getPlayerState
 import com.tlannigan.tavern.utils.toTLocation
@@ -63,6 +64,65 @@ data class TPlayer(
         }
     }
 
+    fun deleteCampaign(args: Array<out String>, player: Player? = getBukkitPlayer()) {
+        if (player != null) {
+            if (activeCampaign != null) {
+                if (args.size > 1 && args[1].lowercase() == "true") {
+                    val campaign = CampaignRepository().find(activeCampaign!!)
+
+                    if (campaign != null) {
+                        if (campaign.gameMaster.uuid == this.id) {
+                            this.endCampaign()
+
+                            campaign.characters.forEach {
+                                campaign.kickPlayer(it.name)
+                            }
+
+                            campaigns.remove(campaign.id)
+                            PlayerRepository().update(this)
+
+                            player.sendMessage("Deleting campaign...")
+                            CampaignRepository().delete(campaign)
+                        }
+                    } else {
+                        player.sendMessage("This campaign has already been deleted.")
+                    }
+                } else {
+                    player.sendMessage("Are you sure you want to delete this campaign? Use /gm delete true")
+                }
+            } else {
+                player.sendMessage("You must enter a campaign before using /gm delete")
+            }
+        } else {
+            getConsoleSender().sendMessage("Player $id doesn't exist.")
+        }
+    }
+
+    fun inviteCampaign(args: Array<out String>, player: Player? = getBukkitPlayer()) {
+        if (player != null) {
+            if (activeCampaign != null) {
+                val playerName = args[1]
+                val invitee = Bukkit.getPlayerExact(playerName)
+                if (invitee != null) {
+                    if (invitee.uniqueId != player.uniqueId) {
+                        val campaign = CampaignRepository().find(activeCampaign!!)
+                        if (campaign != null) {
+                            invitee.sendMessage(inviteCampaign(campaign))
+                        }
+                    } else {
+                        player.sendMessage("Silly Billy, you can't invite yourself!")
+                    }
+                } else {
+                    player.sendMessage("Could not find that player.")
+                }
+            } else {
+                player.sendMessage("Enter a campaign to invite others.")
+            }
+        } else {
+            getConsoleSender().sendMessage("Player $id doesn't exist.")
+        }
+    }
+
     fun startCampaign(args: Array<out String>, player: Player? = getBukkitPlayer()) {
         if (player != null) {
             if (activeCampaign == null) {
@@ -71,8 +131,7 @@ data class TPlayer(
                 val campaign = campaigns.find { it.name == campaignName }
 
                 if (campaign != null) {
-                    val gameMasterId = campaign.gameMaster.uuid
-                    if (gameMasterId == this.id) {
+                    if (campaign.gameMaster.uuid == this.id) {
                         campaign.inSession = true
                         val updatedCampaign = CampaignRepository().update(campaign)
 
@@ -84,13 +143,13 @@ data class TPlayer(
                         player.sendMessage("You are not the Game Master of this campaign.")
                     }
                 } else {
-                    player.sendMessage("This campaign has been deleted.")
+                    player.sendMessage("A campaign with this name does not exist.")
                 }
             } else {
                 player.sendMessage("You must leave your current campaign session first.")
             }
         } else {
-            getConsoleSender().sendMessage("Player $id doesn't exist")
+            getConsoleSender().sendMessage("Player $id doesn't exist.")
         }
     }
 
@@ -117,7 +176,7 @@ data class TPlayer(
                 player.sendMessage("You are not in a campaign session.")
             }
         } else {
-            getConsoleSender().sendMessage("Player $id doesn't exist")
+            getConsoleSender().sendMessage("Player $id doesn't exist.")
         }
     }
 
@@ -151,21 +210,20 @@ data class TPlayer(
                                 campaignState = campaignCharacter.state
                                 player.applyState(campaignState)
                             } else {
-                                player.sendMessage("Could not find your character in this campaign")
+                                player.sendMessage("Could not find your character in this campaign.")
                             }
                         }
                     }
                 } else {
-                    player.sendMessage("Campaign has been deleted.")
+                    player.sendMessage("A campaign with this name does not exist.")
                 }
             } else {
                 player.sendMessage("You must leave your current campaign session first.")
             }
         } else {
-            getConsoleSender().sendMessage("Player $id doesn't exist")
+            getConsoleSender().sendMessage("Player $id doesn't exist.")
         }
     }
-
 
     fun leaveCampaign(player: Player? = getBukkitPlayer()) {
         if (player != null) {
@@ -213,7 +271,7 @@ data class TPlayer(
                 player.sendMessage("You are not in a campaign session.")
             }
         } else {
-            getConsoleSender().sendMessage("Player $id doesn't exist")
+            getConsoleSender().sendMessage("Player $id doesn't exist.")
         }
     }
 
