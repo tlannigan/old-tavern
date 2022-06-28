@@ -1,5 +1,6 @@
 package com.tlannigan.tavern.models
 
+import com.tlannigan.tavern.repositories.PlayerRepository
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import java.util.*
@@ -11,6 +12,14 @@ data class TCharacter(
 
     var name: String,
 
-    var state: PlayerState
+    var state: PlayerState,
 
-)
+    var inSession: Boolean
+
+) {
+
+    fun getTPlayer(): TPlayer? {
+        return PlayerRepository().find(uuid)
+    }
+
+}
