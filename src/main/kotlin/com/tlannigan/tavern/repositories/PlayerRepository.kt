@@ -6,11 +6,9 @@ import com.mongodb.client.result.InsertOneResult
 import com.mongodb.client.result.UpdateResult
 import com.tlannigan.tavern.models.TPlayer
 import com.tlannigan.tavern.utils.DatabaseManager
+import org.bson.conversions.Bson
 import org.bukkit.entity.Player
-import org.litote.kmongo.eq
-import org.litote.kmongo.findOne
-import org.litote.kmongo.getCollection
-import org.litote.kmongo.updateOne
+import org.litote.kmongo.*
 import java.util.*
 
 class PlayerRepository(db: MongoDatabase = DatabaseManager.db) {
@@ -27,6 +25,19 @@ class PlayerRepository(db: MongoDatabase = DatabaseManager.db) {
 
     fun find(id: UUID): TPlayer? {
         return players.findOne(TPlayer::id eq id)
+    }
+
+    fun findMany(uuids: MutableList<UUID>): MutableList<TPlayer> {
+        val filterList: MutableList<Bson> = mutableListOf()
+        for (uuid: UUID in uuids) {
+            filterList.add(TPlayer::id eq uuid)
+        }
+
+        return if (filterList.isNotEmpty()) {
+            players.find(or(filterList)).toMutableList()
+        } else {
+            mutableListOf()
+        }
     }
 
     fun update(tPlayer: TPlayer): UpdateResult {
