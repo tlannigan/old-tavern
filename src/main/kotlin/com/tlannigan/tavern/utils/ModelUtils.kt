@@ -1,6 +1,7 @@
 package com.tlannigan.tavern.utils
 
 import com.tlannigan.tavern.models.PlayerState
+import com.tlannigan.tavern.models.TCharacter
 import com.tlannigan.tavern.models.TLocation
 import com.tlannigan.tavern.models.TPlayer
 import com.tlannigan.tavern.repositories.PlayerRepository
@@ -29,6 +30,15 @@ fun Player.toTPlayer(): TPlayer {
     return TPlayer(
         this.uniqueId,
         this.getPlayerState()
+    )
+}
+
+fun Player.buildCharacter(): TCharacter {
+    return TCharacter(
+        uuid = this.uniqueId,
+        name = this.name,
+        state = this.getPlayerState(),
+        inSession = false
     )
 }
 
