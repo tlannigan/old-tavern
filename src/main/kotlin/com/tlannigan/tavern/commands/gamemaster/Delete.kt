@@ -2,6 +2,7 @@ package com.tlannigan.tavern.commands.gamemaster
 
 import com.tlannigan.tavern.repositories.CampaignRepository
 import com.tlannigan.tavern.repositories.PlayerRepository
+import com.tlannigan.tavern.utils.Strings
 import com.tlannigan.tavern.utils.getTPlayer
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.arguments.ArgumentSuggestions
@@ -58,19 +59,20 @@ class Delete {
                         PlayerRepository().update(gameMaster)
 
                         val deleted = CampaignRepository().delete(campaign)
+
                         if (deleted.deletedCount == 1L) {
-                            player.sendMessage("Campaign $campaignName deleted.")
+                            player.sendMessage(Strings.CAMPAIGN_DELETED)
                         } else {
-                            player.sendMessage("An error occurred while deleting this campaign.")
+                            player.sendMessage(Strings.INTERNAL_ERROR)
                         }
                     } else {
-                        player.sendMessage("You must be the Game Master to delete this campaign.")
+                        player.sendMessage(Strings.GAME_MASTER_REQUIRED)
                     }
                 } else {
-                    player.sendMessage("This campaign has already been deleted.")
+                    player.sendMessage(Strings.INTERNAL_ERROR)
                 }
             } else {
-                player.sendMessage("You must enter a campaign before using /gm delete")
+                player.sendMessage(Strings.INTERNAL_ERROR)
             }
         }
 
