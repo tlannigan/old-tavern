@@ -11,49 +11,45 @@ import dev.jorel.commandapi.arguments.GreedyStringArgument
 import dev.jorel.commandapi.executors.PlayerCommandExecutor
 import org.bukkit.entity.Player
 
-class Create {
+object Create {
 
-    companion object {
+    val createCommand: CommandAPICommand =
+        CommandAPICommand("create")
+            .withArguments(GreedyStringArgument("campaign_name"))
+            .executesPlayer(PlayerCommandExecutor { player: Player, args: Array<Any?> ->
+                createCampaign(player, args)
+            })
 
-        val createCommand: CommandAPICommand =
-            CommandAPICommand("create")
-                .withArguments(GreedyStringArgument("campaign_name"))
-                .executesPlayer(PlayerCommandExecutor { player: Player, args: Array<Any?> ->
-                    createCampaign(player, args)
-                })
+    private fun createCampaign(player: Player, args: Array<Any?>) {
+        val tPlayer = player.getTPlayer()
+        if (tPlayer != null && !tPlayer.hasActiveCampaign()) {
+            // Build initial campaign state
+            val gameMaster = player.buildCharacter()
 
-        private fun createCampaign(player: Player, args: Array<Any?>) {
-            val tPlayer = player.getTPlayer()
-            if (tPlayer != null && !tPlayer.hasActiveCampaign()) {
-                // Build initial campaign state
-                val gameMaster = player.buildCharacter()
+            val campaign = TCampaign(
+                name = args[0] as String,
+                gameMaster = gameMaster,
+                spawn = player.location.toTLocation()
+            )
 
-                val campaign = TCampaign(
-                    name = args[0] as String,
-                    gameMaster = gameMaster,
-                    spawn = player.location.toTLocation()
-                )
+            val savedCampaign = CampaignRepository().create(campaign)
 
-                val savedCampaign = CampaignRepository().create(campaign)
+            if (savedCampaign.insertedId != null) {
+                // Update TPlayer with new campaign
+                tPlayer.campaigns.add(campaign.id)
+                val updatedPlayer = PlayerRepository().update(tPlayer)
 
-                if (savedCampaign.insertedId != null) {
-                    // Update TPlayer with new campaign
-                    tPlayer.campaigns.add(campaign.id)
-                    val updatedPlayer = PlayerRepository().update(tPlayer)
-
-                    if (updatedPlayer.modifiedCount > 0) {
-                        player.sendMessage("Campaign ${args[0]} created!")
-                    } else {
-                        player.sendMessage("There was an issue adding the campaign to your account.")
-                    }
+                if (updatedPlayer.modifiedCount > 0) {
+                    player.sendMessage("Campaign ${args[0]} created!")
                 } else {
-                    player.sendMessage("There was an issue creating the campaign.")
+                    player.sendMessage("There was an issue adding the campaign to your account.")
                 }
             } else {
-                player.sendMessage("You must leave your current campaign session first.")
+                player.sendMessage("There was an issue creating the campaign.")
             }
+        } else {
+            player.sendMessage("You must leave your current campaign session first.")
         }
-
     }
 
 }

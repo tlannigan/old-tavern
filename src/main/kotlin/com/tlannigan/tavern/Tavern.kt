@@ -1,7 +1,7 @@
 package com.tlannigan.tavern
 
-import com.tlannigan.tavern.commands.gamemaster.GameMaster.Companion.gameMasterCommand
-import com.tlannigan.tavern.commands.player.Campaign.Companion.campaignCommand
+import com.tlannigan.tavern.commands.gamemaster.GameMaster.gameMasterCommand
+import com.tlannigan.tavern.commands.player.Campaign.campaignCommand
 import com.tlannigan.tavern.listeners.PlayerListener
 import com.tlannigan.tavern.utils.ConfigManager
 import com.tlannigan.tavern.utils.DatabaseManager
