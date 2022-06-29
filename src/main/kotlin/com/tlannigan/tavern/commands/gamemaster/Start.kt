@@ -32,7 +32,6 @@ class Start {
                         }
                     })
                 )
-                .withAliases("s")
                 .executesPlayer(PlayerCommandExecutor { player: Player, args: Array<Any?> ->
                     startCampaign(player, args)
                 })
@@ -51,7 +50,7 @@ class Start {
 
                         if (updatedCampaign.modifiedCount > 0) {
                             player.sendMessage("Starting campaign...")
-                            player.performCommand("enter $campaignName")
+                            player.performCommand("campaign enter $campaignName")
                         }
                     } else {
                         player.sendMessage("You are not the Game Master of this campaign.")

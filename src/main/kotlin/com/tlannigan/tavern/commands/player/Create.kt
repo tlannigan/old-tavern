@@ -18,7 +18,6 @@ class Create {
         val createCommand: CommandAPICommand =
             CommandAPICommand("create")
                 .withArguments(GreedyStringArgument("campaign_name"))
-                .withAliases("c")
                 .executesPlayer(PlayerCommandExecutor { player: Player, args: Array<Any?> ->
                     createCampaign(player, args)
                 })

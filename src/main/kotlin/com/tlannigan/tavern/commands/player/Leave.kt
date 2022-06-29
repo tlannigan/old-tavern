@@ -27,7 +27,6 @@ class Leave {
 
                 if (campaign != null) {
                     if (campaign.gameMaster.uuid == player.uniqueId && campaign.inSession) {
-                        player.performCommand("gm end")
                     } else {
                         val campaignState = player.getPlayerState()
 

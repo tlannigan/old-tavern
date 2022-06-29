@@ -27,13 +27,13 @@ class End {
 
                     if (updatedCampaign.modifiedCount > 0) {
                         player.sendMessage("Ending campaign session...")
-                        player.performCommand("leave")
+                        player.performCommand("campaign leave")
 
                         val playersInSession = campaign.getPlayersInSession()
                         playersInSession.forEach {
                             val bukkitPlayer = it.getBukkitPlayer()
                             if (bukkitPlayer != null) {
-                                bukkitPlayer.performCommand("leave")
+                                bukkitPlayer.performCommand("campaign leave")
                             } else {
                                 Bukkit.getConsoleSender()
                                     .sendMessage("There was an error allowing ${it.id} to leave campaign session")

@@ -34,7 +34,6 @@ class Invite {
                             }
                         })
                 )
-                .withAliases("i")
                 .executesPlayer(PlayerCommandExecutor { player: Player, args: Array<Any?> ->
                     inviteCampaign(player, args)
                 })

@@ -33,7 +33,6 @@ class Delete {
                         }
                     })
                 )
-                .withAliases("d")
                 .executesPlayer(PlayerCommandExecutor { player: Player, args: Array<Any?> ->
                     deleteCampaign(player, args)
                 })
@@ -48,11 +47,11 @@ class Delete {
 
                 if (campaign != null) {
                     if (campaign.gameMaster.uuid == player.uniqueId) {
-                        player.performCommand("end $campaignName")
+                        player.performCommand("gm end $campaignName")
 
                         campaign.characters.forEach {
                             val campaignPlayer = Bukkit.getPlayer(it.uuid)
-                            player.performCommand("kick ${campaignPlayer?.name}")
+                            player.performCommand("gm kick ${campaignPlayer?.name}")
                         }
 
                         gameMaster.campaigns.remove(campaign.id)

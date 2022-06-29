@@ -33,7 +33,6 @@ class Enter {
                         }
                     })
                 )
-                .withAliases("e")
                 .executesPlayer(PlayerCommandExecutor { player: Player, args: Array<Any?> ->
                     enterCampaign(player, args)
                 })
@@ -47,7 +46,7 @@ class Enter {
 
                 if (campaign != null) {
                     if (campaign.gameMaster.uuid == player.uniqueId && !campaign.inSession) {
-                        player.performCommand("start $campaignName")
+                        player.performCommand("gm start $campaignName")
                     } else if (campaign.inSession) {
                         // Store player's overworld state
                         tPlayer.state = player.getPlayerState()

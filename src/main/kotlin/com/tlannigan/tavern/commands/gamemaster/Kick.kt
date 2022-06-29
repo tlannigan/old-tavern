@@ -33,7 +33,6 @@ class Kick {
                             }
                         })
                 )
-                .withAliases("k")
                 .executesPlayer(PlayerCommandExecutor { player: Player, args: Array<Any?> ->
                     kickPlayer(player, args)
                 })
@@ -55,7 +54,7 @@ class Kick {
                         if (matchedPlayer != null && tPlayer != null) {
                             val playerActiveCampaign = tPlayer.getActiveCampaign()
                             if (playerActiveCampaign?.id == campaign.id) {
-                                player.performCommand("leave")
+                                player.performCommand("campaign leave")
                             }
 
                             tPlayer.campaigns.removeAll { it == campaign.id }
