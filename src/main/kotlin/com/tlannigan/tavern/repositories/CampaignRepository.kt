@@ -50,6 +50,15 @@ class CampaignRepository(db: MongoDatabase = DatabaseManager.db) {
         return campaigns.find(or(filterList), TCampaign::gameMaster / TCharacter::uuid eq uuid).toMutableList()
     }
 
+    fun findManyWhereGameMasterAndNotInSession(ids: MutableList<Id<TCampaign>>, uuid: UUID): MutableList<TCampaign> {
+        val filterList: MutableList<Bson> = mutableListOf()
+        for (id: Id<TCampaign> in ids) {
+            filterList.add(TCampaign::id eq id)
+        }
+
+        return campaigns.find(or(filterList), TCampaign::gameMaster / TCharacter::uuid eq uuid, TCampaign::inSession eq false).toMutableList()
+    }
+
     fun update(campaign: TCampaign): UpdateResult {
         return campaigns.updateOne(campaign)
     }
