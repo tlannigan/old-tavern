@@ -1,6 +1,5 @@
 package com.tlannigan.tavern.commands.gamemaster
 
-import com.tlannigan.tavern.repositories.CampaignRepository
 import com.tlannigan.tavern.utils.Strings
 import com.tlannigan.tavern.utils.getTPlayer
 import com.tlannigan.tavern.utils.toTLocation
@@ -25,7 +24,7 @@ object SetSpawn {
                 if (campaign.gameMaster.uuid == player.uniqueId) {
                     val newSpawn = player.location.toTLocation()
                     campaign.spawn = newSpawn
-                    val updated = CampaignRepository().update(campaign)
+                    val updated = campaign.update()
 
                     if (updated.modifiedCount == 1L) {
                         player.sendMessage(Strings.SPAWN_UPDATED)

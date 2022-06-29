@@ -1,7 +1,5 @@
 package com.tlannigan.tavern.commands.player
 
-import com.tlannigan.tavern.repositories.CampaignRepository
-import com.tlannigan.tavern.repositories.PlayerRepository
 import com.tlannigan.tavern.utils.applyState
 import com.tlannigan.tavern.utils.getPlayerState
 import com.tlannigan.tavern.utils.getTPlayer
@@ -32,10 +30,10 @@ object Leave {
                     // and save campaign state appropriately
                     if (campaign.gameMaster.uuid == player.uniqueId) {
                         campaign.gameMaster.state = campaignState
-                        CampaignRepository().update(campaign)
+                        campaign.update()
 
                         tPlayer.activeCampaign = null
-                        PlayerRepository().update(tPlayer)
+                        tPlayer.update()
 
                         // Apply saved overworld state
                         player.applyState(tPlayer.state)
@@ -44,10 +42,10 @@ object Leave {
                         if (campaignCharacter != null) {
                             // Save campaign state
                             campaignCharacter.state = campaignState
-                            CampaignRepository().update(campaign)
+                            campaign.update()
 
                             tPlayer.activeCampaign = null
-                            PlayerRepository().update(tPlayer)
+                            tPlayer.update()
 
                             // Apply saved overworld state
                             player.applyState(tPlayer.state)

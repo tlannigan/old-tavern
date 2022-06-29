@@ -1,7 +1,6 @@
 package com.tlannigan.tavern.commands.gamemaster
 
 import com.tlannigan.tavern.repositories.CampaignRepository
-import com.tlannigan.tavern.repositories.PlayerRepository
 import com.tlannigan.tavern.utils.getTPlayer
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.arguments.ArgumentSuggestions
@@ -56,10 +55,10 @@ object Kick {
                         }
 
                         tPlayer.campaigns.removeAll { it == campaign.id }
-                        PlayerRepository().update(tPlayer)
+                        tPlayer.update()
 
                         campaign.characters.removeAll { it.name == characterName }
-                        CampaignRepository().update(campaign)
+                        campaign.update()
                     }
                 } else {
                     player.sendMessage("Multiple character matched that name, did not delete.")

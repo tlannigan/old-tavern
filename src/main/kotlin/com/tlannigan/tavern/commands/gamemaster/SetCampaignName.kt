@@ -1,6 +1,5 @@
 package com.tlannigan.tavern.commands.gamemaster
 
-import com.tlannigan.tavern.repositories.CampaignRepository
 import com.tlannigan.tavern.utils.Strings
 import com.tlannigan.tavern.utils.getTPlayer
 import dev.jorel.commandapi.CommandAPICommand
@@ -26,7 +25,7 @@ object SetCampaignName {
 
             if (campaign != null && campaign.gameMaster.uuid == player.uniqueId) {
                 campaign.name = args[0] as String
-                CampaignRepository().update(campaign)
+                campaign.update()
             } else {
                 player.sendMessage(Strings.GAME_MASTER_REQUIRED)
             }

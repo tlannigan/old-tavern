@@ -1,6 +1,8 @@
 package com.tlannigan.tavern.models
 
+import com.mongodb.client.result.UpdateResult
 import com.tlannigan.tavern.repositories.CampaignRepository
+import com.tlannigan.tavern.repositories.PlayerRepository
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -51,6 +53,10 @@ data class TPlayer(
 
     fun getBukkitPlayer(): Player? {
         return Bukkit.getPlayer(id)
+    }
+
+    fun update(): UpdateResult {
+        return PlayerRepository().update(this)
     }
 
 }

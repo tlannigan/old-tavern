@@ -44,7 +44,7 @@ object Start {
             if (campaign != null) {
                 if (campaign.gameMaster.uuid == player.uniqueId) {
                     campaign.inSession = true
-                    val updatedCampaign = CampaignRepository().update(campaign)
+                    val updatedCampaign = campaign.update()
 
                     if (updatedCampaign.modifiedCount > 0) {
                         player.sendMessage("Starting campaign...")

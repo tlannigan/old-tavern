@@ -55,7 +55,7 @@ object Enter {
                     val character = campaign.characters.find { it.uuid == player.uniqueId }
                     if (character != null) {
                         character.inSession = true
-                        CampaignRepository().update(campaign)
+                        campaign.update()
                     }
 
                     player.sendMessage("Entering campaign session...")

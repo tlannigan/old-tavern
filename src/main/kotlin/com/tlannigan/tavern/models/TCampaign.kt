@@ -1,5 +1,8 @@
 package com.tlannigan.tavern.models
 
+import com.mongodb.client.result.DeleteResult
+import com.mongodb.client.result.UpdateResult
+import com.tlannigan.tavern.repositories.CampaignRepository
 import com.tlannigan.tavern.repositories.PlayerRepository
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
@@ -41,6 +44,14 @@ data class TCampaign(
         val charactersInSession = characters.filter { it.inSession }
         val tPlayerIds = charactersInSession.map { it.uuid }.toMutableList()
         return PlayerRepository().findMany(tPlayerIds)
+    }
+
+    fun update(): UpdateResult {
+        return CampaignRepository().update(this)
+    }
+
+    fun delete(): DeleteResult {
+        return CampaignRepository().delete(this)
     }
 
 }

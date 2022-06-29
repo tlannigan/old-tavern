@@ -1,6 +1,5 @@
 package com.tlannigan.tavern.commands.gamemaster
 
-import com.tlannigan.tavern.repositories.CampaignRepository
 import com.tlannigan.tavern.utils.getTPlayer
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.executors.PlayerCommandExecutor
@@ -21,7 +20,7 @@ object End {
             val campaign = gameMaster.getActiveCampaign()
             if (campaign != null) {
                 campaign.inSession = false
-                val updatedCampaign = CampaignRepository().update(campaign)
+                val updatedCampaign = campaign.update()
 
                 if (updatedCampaign.modifiedCount > 0) {
                     player.sendMessage("Ending campaign session...")

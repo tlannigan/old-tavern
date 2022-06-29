@@ -1,7 +1,6 @@
 package com.tlannigan.tavern.commands.gamemaster
 
 import com.tlannigan.tavern.repositories.CampaignRepository
-import com.tlannigan.tavern.repositories.PlayerRepository
 import com.tlannigan.tavern.utils.Strings
 import com.tlannigan.tavern.utils.getTPlayer
 import dev.jorel.commandapi.CommandAPICommand
@@ -54,9 +53,9 @@ object Delete {
                     }
 
                     gameMaster.campaigns.remove(campaign.id)
-                    PlayerRepository().update(gameMaster)
+                    gameMaster.update()
 
-                    val deleted = CampaignRepository().delete(campaign)
+                    val deleted = campaign.delete()
 
                     if (deleted.deletedCount == 1L) {
                         player.sendMessage(Strings.CAMPAIGN_DELETED)

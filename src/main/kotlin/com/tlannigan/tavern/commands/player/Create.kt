@@ -2,7 +2,6 @@ package com.tlannigan.tavern.commands.player
 
 import com.tlannigan.tavern.models.TCampaign
 import com.tlannigan.tavern.repositories.CampaignRepository
-import com.tlannigan.tavern.repositories.PlayerRepository
 import com.tlannigan.tavern.utils.buildCharacter
 import com.tlannigan.tavern.utils.getTPlayer
 import com.tlannigan.tavern.utils.toTLocation
@@ -37,7 +36,7 @@ object Create {
             if (savedCampaign.insertedId != null) {
                 // Update TPlayer with new campaign
                 tPlayer.campaigns.add(campaign.id)
-                val updatedPlayer = PlayerRepository().update(tPlayer)
+                val updatedPlayer = tPlayer.update()
 
                 if (updatedPlayer.modifiedCount > 0) {
                     player.sendMessage("Campaign ${args[0]} created!")
