@@ -3,14 +3,3 @@ version: 0.1
 author: Tirsty
 main: com.tlannigan.tavern.Tavern
 api-version: 1.19
-commands:
-
-  campaign:
-    description: Campaign related commands
-    usage: /campaign [create | list | leave]
-    aliases: [c, camp]
-
-  gamemaster:
-    description: Game Master related commands
-    usage: /gamemaster [start | end | delete]
-    aliases: gm
