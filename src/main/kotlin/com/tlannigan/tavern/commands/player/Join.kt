@@ -24,7 +24,7 @@ object Join {
         if (tPlayer != null) {
             val stringId = args[0] as String
             val campaignId = stringId.toId<TCampaign>()
-            var campaign = CampaignRepository().find(campaignId)
+            val campaign = CampaignRepository().find(campaignId)
 
             if (campaign != null) {
                 val character = player.buildCharacter(campaign.spawn)
