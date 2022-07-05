@@ -11,14 +11,14 @@ import org.bukkit.entity.Player
 fun Player.getTPlayer(): TPlayer? {
     // Try to find TPlayer in DB
     val tPlayer = PlayerRepository().find(this)
-    if (tPlayer != null) {
-        return tPlayer
+    return if (tPlayer != null) {
+        tPlayer
     } else {
         // Create a new TPlayer
         val player = this.toTPlayer()
         val savedPlayer = PlayerRepository().create(player)
 
-        return if (savedPlayer.insertedId != null) {
+        if (savedPlayer.insertedId != null) {
             player
         } else {
             null
@@ -38,6 +38,19 @@ fun Player.buildCharacter(): TCharacter {
         uuid = this.uniqueId,
         name = this.name,
         state = this.getPlayerState(),
+        inSession = false
+    )
+}
+
+fun Player.buildCharacter(tLocation: TLocation): TCharacter {
+    return TCharacter(
+        uuid = this.uniqueId,
+        name = this.name,
+        state = PlayerState(
+            health = this.health,
+            mana = this.foodLevel,
+            location = tLocation
+        ),
         inSession = false
     )
 }
