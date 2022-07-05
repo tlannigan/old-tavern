@@ -13,7 +13,7 @@ object ChatComponents {
             .append(
                 Component.text("[JOIN]")
                     .color(NamedTextColor.YELLOW)
-                    .clickEvent(ClickEvent.runCommand("/join ${tCampaign.id}")))
+                    .clickEvent(ClickEvent.runCommand("/campaign join ${tCampaign.id}")))
             .append(Component.text(" ${tCampaign.name}"))
     }
 

@@ -10,6 +10,8 @@ object Strings {
     // Success messages
     const val TELEPORT_SPAWN = "Teleporting to spawn..."
     const val SPAWN_UPDATED = "Spawn updated."
+    const val CAMPAIGN_JOINED_PLAYER = "Campaign joined."
+    const val CAMPAIGN_JOINED_GM = " joined "
     const val CAMPAIGN_DELETED = "Campaign deleted."
 
 }

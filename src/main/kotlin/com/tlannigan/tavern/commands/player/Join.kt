@@ -2,6 +2,7 @@ package com.tlannigan.tavern.commands.player
 
 import com.tlannigan.tavern.models.TCampaign
 import com.tlannigan.tavern.repositories.CampaignRepository
+import com.tlannigan.tavern.utils.Strings
 import com.tlannigan.tavern.utils.buildCharacter
 import com.tlannigan.tavern.utils.getTPlayer
 import dev.jorel.commandapi.CommandAPICommand
@@ -33,7 +34,13 @@ object Join {
 
                 tPlayer.campaigns.add(campaign.id)
                 tPlayer.update()
+                
+                player.sendMessage(Strings.CAMPAIGN_JOINED_PLAYER)
+            } else {
+                player.sendMessage(Strings.INTERNAL_ERROR)
             }
+        } else {
+            player.sendMessage(Strings.INTERNAL_ERROR)
         }
     }
 
