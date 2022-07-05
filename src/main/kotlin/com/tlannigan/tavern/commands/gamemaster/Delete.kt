@@ -45,7 +45,9 @@ object Delete {
 
             if (campaign != null) {
                 if (campaign.gameMaster.uuid == player.uniqueId) {
-                    player.performCommand("gm end $campaignName")
+                    if (campaign.inSession) {
+                        player.performCommand("gm end")
+                    }
 
                     campaign.characters.forEach {
                         val campaignPlayer = Bukkit.getPlayer(it.uuid)
