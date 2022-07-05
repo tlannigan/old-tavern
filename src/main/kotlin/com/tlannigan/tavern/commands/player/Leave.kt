@@ -11,7 +11,6 @@ object Leave {
 
     val leaveCommand: CommandAPICommand =
         CommandAPICommand("leave")
-            .withAliases("l")
             .executesPlayer(PlayerCommandExecutor { player: Player, _ ->
                 leaveCampaign(player)
             })
