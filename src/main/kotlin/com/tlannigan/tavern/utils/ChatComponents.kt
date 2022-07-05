@@ -6,19 +6,15 @@ import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
 
-class ChatComponents {
+object ChatComponents {
 
-    companion object {
-
-        fun inviteCampaign(tCampaign: TCampaign): TextComponent {
-            return Component.text("You have been invited to ")
-                .append(
-                    Component.text("[JOIN]")
-                        .color(NamedTextColor.YELLOW)
-                        .clickEvent(ClickEvent.runCommand("/join ${tCampaign.id}")))
-                .append(Component.text(" ${tCampaign.name}"))
-        }
-
+    fun inviteCampaign(tCampaign: TCampaign): TextComponent {
+        return Component.text("You have been invited to ")
+            .append(
+                Component.text("[JOIN]")
+                    .color(NamedTextColor.YELLOW)
+                    .clickEvent(ClickEvent.runCommand("/join ${tCampaign.id}")))
+            .append(Component.text(" ${tCampaign.name}"))
     }
 
 }
