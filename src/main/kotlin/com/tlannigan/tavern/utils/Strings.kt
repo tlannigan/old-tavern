@@ -6,6 +6,7 @@ object Strings {
     const val ACTIVE_CAMPAIGN_REQUIRED = "You must enter a campaign to use this command."
     const val GAME_MASTER_REQUIRED = "You must be the Game Master to use this command."
     const val INTERNAL_ERROR = "An internal error has occurred. Contact an administrator."
+    const val CHARACTER_NOT_FOUND = "Could not find a character with that name."
 
     // Success messages
     const val TELEPORT_SPAWN = "Teleporting to spawn..."
