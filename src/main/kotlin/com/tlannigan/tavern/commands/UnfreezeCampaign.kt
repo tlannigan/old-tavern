@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
 object UnfreezeCampaign {
 
     val unfreezeCampaignCommand: CommandAPICommand =
-        CommandAPICommand("freeze")
+        CommandAPICommand("unfreeze")
             .executesPlayer(PlayerCommandExecutor { player: Player, args: Array<Any?> ->
                 unfreezeCampaign(player, args)
             })

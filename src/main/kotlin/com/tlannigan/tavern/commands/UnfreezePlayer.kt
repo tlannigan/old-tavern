@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture
 object UnfreezePlayer {
 
     val unfreezePlayerCommand: CommandAPICommand =
-        CommandAPICommand("freeze")
+        CommandAPICommand("unfreeze")
             .withArguments(StringArgument("character_name")
                 .replaceSuggestions(ArgumentSuggestions.stringsAsync { info ->
                     CompletableFuture.supplyAsync {
