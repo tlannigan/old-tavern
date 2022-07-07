@@ -43,6 +43,7 @@ object FreezePlayer {
                 val targetCharacter = campaign.characters.find { it.name == targetCharacterName }
 
                 if (targetCharacter != null && targetCharacter.inSession) {
+                    player.sendMessage(String.format(Strings.CHARACTER_FROZEN, targetCharacter.name))
                     val targetPlayer = Bukkit.getPlayer(targetCharacter.uuid)
                     targetPlayer?.freeze()
                 } else {

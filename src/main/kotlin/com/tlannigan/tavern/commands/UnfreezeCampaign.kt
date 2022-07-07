@@ -25,6 +25,8 @@ object UnfreezeCampaign {
                 val charactersInSession = campaign.characters.filter { it.inSession }
 
                 if (charactersInSession.isNotEmpty()) {
+                    player.sendMessage(Strings.CAMPAIGN_UNFROZEN)
+
                     for (character in charactersInSession) {
                         val targetPlayer = Bukkit.getPlayer(character.uuid)
                         targetPlayer?.unfreeze()

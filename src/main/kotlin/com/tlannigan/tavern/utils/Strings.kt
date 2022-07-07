@@ -15,4 +15,10 @@ object Strings {
     const val CAMPAIGN_JOINED_GM = " joined "
     const val CAMPAIGN_DELETED = "Campaign deleted."
 
+    const val CAMPAIGN_FROZEN = "All characters have been frozen."
+    const val CAMPAIGN_UNFROZEN = "All characters have been unfrozen."
+
+    const val CHARACTER_FROZEN = "%s has been frozen."
+    const val CHARACTER_UNFROZEN = "%s has been unfrozen."
+
 }
