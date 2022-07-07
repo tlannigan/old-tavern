@@ -94,22 +94,26 @@ fun Player.applyState(state: PlayerState) {
 }
 
 fun Player.freeze() {
-    this.addScoreboardTag("frozen")
-    this.walkSpeed = 0.0F
-    val jumpBoost: PotionEffect? = this.getPotionEffect(PotionEffectType.JUMP)
-    if (jumpBoost == null) {
-        this.addPotionEffect(
-            PotionEffect(PotionEffectType.JUMP, 31536000, 128, true, true, false)
-        )
+    if (!this.scoreboardTags.contains("frozen")) {
+        this.addScoreboardTag("frozen")
+        this.walkSpeed = 0.0F
+        val jumpBoost: PotionEffect? = this.getPotionEffect(PotionEffectType.JUMP)
+        if (jumpBoost == null) {
+            this.addPotionEffect(
+                PotionEffect(PotionEffectType.JUMP, 31536000, 128, true, true, false)
+            )
+        }
     }
 }
 
 fun Player.unfreeze() {
-    this.removeScoreboardTag("frozen")
-    this.walkSpeed = 0.2F
-    val jumpBoost: PotionEffect? = this.getPotionEffect(PotionEffectType.JUMP)
-    if (jumpBoost != null) {
-        this.removePotionEffect(PotionEffectType.JUMP)
+    if (this.scoreboardTags.contains("frozen")) {
+        this.removeScoreboardTag("frozen")
+        this.walkSpeed = 0.2F
+        val jumpBoost: PotionEffect? = this.getPotionEffect(PotionEffectType.JUMP)
+        if (jumpBoost != null) {
+            this.removePotionEffect(PotionEffectType.JUMP)
+        }
     }
 }
 
