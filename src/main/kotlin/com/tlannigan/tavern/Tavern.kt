@@ -6,6 +6,7 @@ import com.tlannigan.tavern.commands.FreezePlayer.freezePlayerCommand
 import com.tlannigan.tavern.commands.GameMaster.gameMasterCommand
 import com.tlannigan.tavern.commands.UnfreezeCampaign.unfreezeCampaignCommand
 import com.tlannigan.tavern.commands.UnfreezePlayer.unfreezePlayerCommand
+import com.tlannigan.tavern.listeners.FreezeListener
 import com.tlannigan.tavern.listeners.PlayerListener
 import com.tlannigan.tavern.utils.ConfigManager
 import com.tlannigan.tavern.utils.DatabaseManager
@@ -38,6 +39,7 @@ class Tavern : JavaPlugin() {
 
     private fun registerEvents() {
         server.pluginManager.registerEvents(PlayerListener(), this)
+        server.pluginManager.registerEvents(FreezeListener(), this)
     }
 
     private fun registerCommands() {
