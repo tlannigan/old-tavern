@@ -5,9 +5,13 @@ import com.tlannigan.tavern.models.TCharacter
 import com.tlannigan.tavern.models.TLocation
 import com.tlannigan.tavern.models.TPlayer
 import com.tlannigan.tavern.repositories.PlayerRepository
+import com.tlannigan.tavern.utils.Constants.emptyArmorContents
+import com.tlannigan.tavern.utils.Constants.emptyContents
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.inventory.PlayerInventory
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
 
 fun Player.getTPlayer(): TPlayer? {
     // Try to find TPlayer in DB
@@ -38,8 +42,13 @@ fun Player.buildCharacter(): TCharacter {
     return TCharacter(
         uuid = this.uniqueId,
         name = this.name,
-        state = this.getPlayerState(),
-        inSession = false
+        state = PlayerState(
+            health = 20.00,
+            mana = 20,
+            location = this.location.toTLocation(),
+            inventory = arrayOf(emptyContents, emptyArmorContents)
+        ),
+        inSession = false,
     )
 }
 
@@ -48,13 +57,10 @@ fun Player.buildCharacter(tLocation: TLocation): TCharacter {
         uuid = this.uniqueId,
         name = this.name,
         state = PlayerState(
-            health = this.health,
-            mana = this.foodLevel,
+            health = 20.00,
+            mana = 20,
             location = tLocation,
-            inventory = arrayOf(
-                "rO0ABXcEAAAAKXBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBw",
-                "rO0ABXcEAAAABHBwcHA=" // Empty inventory Base64 strings
-            )
+            inventory = arrayOf(emptyContents, emptyArmorContents)
         ),
         inSession = false
     )
@@ -84,6 +90,26 @@ fun Player.applyState(state: PlayerState) {
 
     if (armorContents != null) {
         this.inventory.armorContents = armorContents
+    }
+}
+
+fun Player.freeze() {
+    this.addScoreboardTag("frozen")
+    this.walkSpeed = 0.0F
+    val jumpBoost: PotionEffect? = this.getPotionEffect(PotionEffectType.JUMP)
+    if (jumpBoost == null) {
+        this.addPotionEffect(
+            PotionEffect(PotionEffectType.JUMP, 31536000, 128, true, true, false)
+        )
+    }
+}
+
+fun Player.unfreeze() {
+    this.removeScoreboardTag("frozen")
+    this.walkSpeed = 0.2F
+    val jumpBoost: PotionEffect? = this.getPotionEffect(PotionEffectType.JUMP)
+    if (jumpBoost != null) {
+        this.removePotionEffect(PotionEffectType.JUMP)
     }
 }
 

@@ -1,7 +1,9 @@
 package com.tlannigan.tavern
 
 import com.tlannigan.tavern.commands.Campaign.campaignCommand
+import com.tlannigan.tavern.commands.FreezePlayer.freezePlayerCommand
 import com.tlannigan.tavern.commands.GameMaster.gameMasterCommand
+import com.tlannigan.tavern.commands.UnfreezePlayer.unfreezePlayerCommand
 import com.tlannigan.tavern.listeners.PlayerListener
 import com.tlannigan.tavern.utils.ConfigManager
 import com.tlannigan.tavern.utils.DatabaseManager
@@ -39,6 +41,8 @@ class Tavern : JavaPlugin() {
     private fun registerCommands() {
         campaignCommand.register()
         gameMasterCommand.register()
+        freezePlayerCommand.register()
+        unfreezePlayerCommand.register()
     }
 
 }
