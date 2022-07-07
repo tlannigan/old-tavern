@@ -1,4 +1,4 @@
-package com.tlannigan.tavern.commands.gamemaster
+package com.tlannigan.tavern.commands
 
 import com.tlannigan.tavern.commands.gamemaster.Delete.deleteCommand
 import com.tlannigan.tavern.commands.gamemaster.End.endCommand

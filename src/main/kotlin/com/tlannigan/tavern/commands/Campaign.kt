@@ -1,9 +1,9 @@
-package com.tlannigan.tavern.commands.player
+package com.tlannigan.tavern.commands
 
-import com.tlannigan.tavern.commands.player.Create.createCommand
-import com.tlannigan.tavern.commands.player.Enter.enterCommand
-import com.tlannigan.tavern.commands.player.Join.joinCommand
-import com.tlannigan.tavern.commands.player.Leave.leaveCommand
+import com.tlannigan.tavern.commands.campaign.Create.createCommand
+import com.tlannigan.tavern.commands.campaign.Enter.enterCommand
+import com.tlannigan.tavern.commands.campaign.Join.joinCommand
+import com.tlannigan.tavern.commands.campaign.Leave.leaveCommand
 import dev.jorel.commandapi.CommandAPICommand
 
 object Campaign {

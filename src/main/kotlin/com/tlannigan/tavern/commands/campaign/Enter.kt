@@ -1,4 +1,4 @@
-package com.tlannigan.tavern.commands.player
+package com.tlannigan.tavern.commands.campaign
 
 import com.tlannigan.tavern.models.PlayerState
 import com.tlannigan.tavern.repositories.CampaignRepository
