@@ -7,6 +7,7 @@ import com.tlannigan.tavern.models.TPlayer
 import com.tlannigan.tavern.repositories.PlayerRepository
 import org.bukkit.Location
 import org.bukkit.entity.Player
+import org.bukkit.inventory.PlayerInventory
 
 fun Player.getTPlayer(): TPlayer? {
     // Try to find TPlayer in DB
@@ -49,7 +50,11 @@ fun Player.buildCharacter(tLocation: TLocation): TCharacter {
         state = PlayerState(
             health = this.health,
             mana = this.foodLevel,
-            location = tLocation
+            location = tLocation,
+            inventory = arrayOf(
+                "rO0ABXcEAAAAKXBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBw",
+                "rO0ABXcEAAAABHBwcHA=" // Empty inventory Base64 strings
+            )
         ),
         inSession = false
     )
@@ -60,15 +65,26 @@ fun Player.getPlayerState(): PlayerState {
         this.health,
         this.foodLevel,
         this.location.toTLocation(),
-        null
+        this.inventory.serialize()
     )
 }
 
 fun Player.applyState(state: PlayerState) {
     this.health = state.health
     this.foodLevel = state.mana
+
     this.teleport(state.location.toLocation())
-    // TODO("Apply inventory in PlayerState")
+
+    val contents = Serializer().itemStackArrayFromBase64(state.inventory[0])
+    val armorContents = Serializer().itemStackArrayFromBase64(state.inventory[1])
+
+    if (contents != null) {
+        this.inventory.contents = contents
+    }
+
+    if (armorContents != null) {
+        this.inventory.armorContents = armorContents
+    }
 }
 
 /**
@@ -83,4 +99,8 @@ fun Location.toTLocation(): TLocation {
         this.yaw,
         this.pitch
     )
+}
+
+fun PlayerInventory.serialize(): Array<String> {
+    return Serializer().playerInventoryToBase64(this)
 }

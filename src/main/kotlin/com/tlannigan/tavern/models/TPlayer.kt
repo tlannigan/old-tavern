@@ -10,7 +10,6 @@ import org.bukkit.Bukkit
 import org.bukkit.Bukkit.getWorld
 import org.bukkit.Location
 import org.bukkit.entity.Player
-import org.bukkit.inventory.Inventory
 import org.litote.kmongo.Id
 import java.util.*
 
@@ -70,7 +69,7 @@ data class PlayerState(
 
     val location: TLocation,
 
-    val inventory: Inventory? = null
+    val inventory: Array<String>
 
 )
 
