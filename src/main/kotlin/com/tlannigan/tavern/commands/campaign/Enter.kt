@@ -10,6 +10,7 @@ import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.arguments.ArgumentSuggestions
 import dev.jorel.commandapi.arguments.GreedyStringArgument
 import dev.jorel.commandapi.executors.PlayerCommandExecutor
+import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import java.util.concurrent.CompletableFuture
 
@@ -65,12 +66,17 @@ object Enter {
                     // Check if player is Game Master or player
                     // and apply relevant state
                     if (campaign.gameMaster.uuid == player.uniqueId) {
+                        player.gameMode = GameMode.CREATIVE
+
+                        // Apply game master's state in campaign
                         campaignState = campaign.gameMaster.state
                         player.applyState(campaignState)
                     } else {
                         val campaignCharacter = campaign.characters.find { it.uuid == player.uniqueId }
                         if (campaignCharacter != null) {
-                            // Fetch player's state in campaign
+                            player.gameMode = GameMode.ADVENTURE
+
+                            // Apply player's state in campaign
                             campaignState = campaignCharacter.state
                             player.applyState(campaignState)
                         } else {

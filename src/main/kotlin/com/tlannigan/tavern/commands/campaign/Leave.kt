@@ -5,6 +5,7 @@ import com.tlannigan.tavern.utils.getPlayerState
 import com.tlannigan.tavern.utils.getTPlayer
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.executors.PlayerCommandExecutor
+import org.bukkit.GameMode
 import org.bukkit.entity.Player
 
 object Leave {
@@ -22,6 +23,7 @@ object Leave {
 
             if (campaign != null) {
                 if (campaign.gameMaster.uuid == player.uniqueId && campaign.inSession) {
+                    player.performCommand("gm end")
                 } else {
                     val campaignState = player.getPlayerState()
 
@@ -47,6 +49,7 @@ object Leave {
                             tPlayer.update()
 
                             // Apply saved overworld state
+                            player.gameMode = GameMode.SURVIVAL
                             player.applyState(tPlayer.state)
                         } else {
                             player.sendMessage("There was an issue finding your character in this campaign.")
