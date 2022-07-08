@@ -11,12 +11,17 @@ import net.kyori.adventure.text.format.NamedTextColor
 object ChatComponents {
 
     fun inviteCampaign(tCampaign: TCampaign): TextComponent {
-        return Component.text("You have been invited to ")
+        return Component.text("${tCampaign.gameMaster.name} has invited you to ")
             .append(
-                Component.text("[JOIN]")
+                Component.text("[join]")
                     .color(NamedTextColor.YELLOW)
-                    .hoverEvent(HoverEventSource { return@HoverEventSource HoverEvent.showText(Component.text("Click to join ${tCampaign.name}")) })
-                    .clickEvent(ClickEvent.runCommand("/campaign join ${tCampaign.id}")))
+                    .hoverEvent(HoverEventSource {
+                        HoverEvent.showText(Component.text("Click to join ${tCampaign.name}"))
+                    })
+                    .clickEvent(
+                        ClickEvent.runCommand("/campaign join ${tCampaign.id}")
+                    )
+            )
             .append(Component.text(" ${tCampaign.name}"))
     }
 
