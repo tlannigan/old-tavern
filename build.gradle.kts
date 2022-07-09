@@ -14,14 +14,16 @@ version = "0.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
-    maven { url = uri("https://repo.codemc.org/repository/maven-public/") }
+    maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://repo.codemc.org/repository/maven-public/")
+    maven("https://repo.md-5.net/content/groups/public/")
 }
 
 dependencies {
     implementation("org.litote.kmongo:kmongo-serialization:4.6.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("dev.jorel:commandapi-shade:8.4.1")
+    implementation("LibsDisguises:LibsDisguises:10.0.28")
 
     testImplementation(kotlin("test"))
 
